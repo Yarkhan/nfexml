@@ -1,0 +1,16 @@
+{
+    "name": "yarkhan/nfexml",
+    "description": "Construtor de xml para NFe",
+    "authors": [
+        {
+            "name": "Yarkhan",
+            "email": "rasrpg@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Yarkhan\\NFeXML\\": "src"
+        }
+    }
+}
