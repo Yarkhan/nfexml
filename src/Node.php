@@ -6,8 +6,9 @@ class Node{
     
     protected $el;
     protected $children = [];
-    function __construct($node){
-        $this->el = new \SimpleXMLElement("<$node/>");
+    protected $nodeName = 'Node';
+    function __construct(){
+        $this->el = new \SimpleXMLElement("<{$this->nodeName}/>");
     }
     function __set($prop,$val){
         if(method_exists($this,"set_$prop")){
@@ -15,15 +16,11 @@ class Node{
         }
         throw new \Exception("Property $prop does not exist");
     }
-    public function getName(){
-        return $this->el->getName();
-    }
     function __get($prop){
         if(method_exists($this,"get_$prop")){
             return $this->{"get_$prop"}();
         }
         if(!empty($this->el->$prop)){
-            var_dump(empty($this->el->$prop));
             return $this->el->$prop;
         }
         if(isset($this->children[$prop])){
@@ -32,7 +29,7 @@ class Node{
         }
     }
     function addChild(Node $child){
-        $this->children[$child->getName()]= $child;
+        $this->children[$child->nodeName]= $child;
     }
 
     function removeChild($name){
@@ -48,5 +45,8 @@ class Node{
             $toDom->appendChild($toDom->ownerDocument->importNode($fromDom, true));
         }
         return $el;
+    }
+    public function asXML(){
+        return $this->getSXML()->asXML();
     }
 }
