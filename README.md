@@ -11,7 +11,7 @@ use Yarkhan\NFeXML;
 
 $nfe = new NFe;
 
-$ide = $nfe->infNFe->sd;
+$ide = $nfe->infNFe->ide;
 $ide->cUF = 53;
 $ide->cNF = 201546;
 
