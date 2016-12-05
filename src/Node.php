@@ -10,13 +10,13 @@ class Node{
     function __construct(){
         $this->el = new \SimpleXMLElement("<{$this->nodeName}/>");
     }
-    function __set($prop,$val){
+    public function __set($prop,$val){
         if(method_exists($this,"set_$prop")){
             return $this->{"set_$prop"}($val);
         }
         throw new \Exception("Property $prop does not exist");
     }
-    function __get($prop){
+    public function __get($prop){
         if(method_exists($this,"get_$prop")){
             return $this->{"get_$prop"}();
         }
@@ -28,17 +28,17 @@ class Node{
             return $this->children[$prop];
         }
     }
-    function addChild(Node $child){
+    public function addChild(Node $child){
         $this->children[$child->nodeName]= $child;
     }
 
-    function removeChild($name){
+    public function removeChild($name){
         unset($this->children[$name]);
     }
     public function getSXML(){
 
-        $el = $this->el;
-
+        $el = new \SimpleXMLElement($this->el->asXML());
+        // $el = $this->el;
         foreach($this->children as $name => $child){
             $toDom = dom_import_simplexml($el);
             $fromDom = dom_import_simplexml($child->getSXML());
